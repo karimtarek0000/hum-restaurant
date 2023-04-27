@@ -1,9 +1,9 @@
 {
-  "name": "learn-next-react",
+  "name": "hum-restaurant",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --port=4000",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
