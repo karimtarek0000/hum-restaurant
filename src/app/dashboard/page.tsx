@@ -1,10 +1,35 @@
+import Card from "@/components/Card";
+import { RestaurantCard } from "@/types";
+import { PrismaClient } from "@prisma/client";
 import { Metadata } from "next";
+
+const prisma = new PrismaClient();
 
 export const metadata: Metadata = {
   title: "Home",
 };
 
-function Home(): JSX.Element {
+const getAllRestaurant = async (): Promise<RestaurantCard[]> => {
+  const data = await prisma.restaurant.findMany({
+    select: {
+      id: true,
+      name: true,
+      main_image: true,
+      slug: true,
+      price: true,
+      location: true,
+      cuisine: true,
+    },
+  });
+  return data;
+};
+
+async function Home() {
+  const restaurants = await getAllRestaurant();
+
+  const cards = restaurants.map((rest) => (
+    <Card key={rest.id} restaurant={rest} />
+  ));
   return (
     <>
       {/* HEADER */}
@@ -28,33 +53,12 @@ function Home(): JSX.Element {
         </div>
       </div>
       {/* HEADER */} {/* CARDS */}
-      <div className="py-3 px-36 mt-10 flex flex-wrap justify-center">
+      <div className="py-3 mt-10 flex flex-wrap justify-center">
         {/* CARD */}
-        <div className="w-64 h-72 m-3 rounded overflow-hidden border cursor-pointer">
-          <img
-            src="https://resizer.otstatic.com/v2/photos/wide-huge/2/31852905.jpg"
-            alt=""
-            className="w-full h-36"
-          />
-          <div className="p-1">
-            <h3 className="font-bold text-2xl mb-2">Milestones Grill</h3>
-            <div className="flex items-start">
-              <div className="flex mb-2">*****</div>
-              <p className="ml-2">77 reviews</p>
-            </div>
-            <div className="flex text-reg font-light capitalize">
-              <p className=" mr-3">Mexican</p>
-              <p className="mr-3">$$$$</p>
-              <p>Toronto</p>
-            </div>
-            <p className="text-sm mt-1 font-bold">Booked 3 times today</p>
-          </div>
-        </div>
-        {/* CARD */}
+        {cards}
       </div>
     </>
   );
 }
 
 export default Home;
-
