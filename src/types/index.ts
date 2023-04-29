@@ -9,3 +9,11 @@ export type RestaurantCard = {
   location: Location;
   cuisine: Cuisine;
 };
+
+export type RestaurantSlug = {
+  id: number;
+  name: string;
+  images: Array<string>;
+  description: string;
+  slug: string;
+};

@@ -1,14 +1,45 @@
 import ResturanNavbar from "@/components/ResturanNavbar";
+import { RestaurantSlug } from "@/types";
+import { PrismaClient } from "@prisma/client";
 
-function ResturantDetails(): JSX.Element {
+const prisma = new PrismaClient();
+
+const getRestaurant = async (slug: string): Promise<RestaurantSlug> => {
+  const data = await prisma.restaurant.findUnique({
+    where: {
+      slug,
+    },
+    select: {
+      id: true,
+      name: true,
+      images: true,
+      description: true,
+      slug: true,
+    },
+  });
+
+  return data as RestaurantSlug;
+};
+
+type props = {
+  params: { slug: string };
+};
+
+async function ResturantDetails({ params }: props) {
+  const { name, slug, description, images } = await getRestaurant(params.slug);
+
+  const allImages = images.map((img) => (
+    <img key={img} className="w-56 h-44 mr-1 mb-1" src={img} alt={name} />
+  ));
+
   return (
     <>
       <div className="bg-white w-[70%] rounded p-3 shadow">
         {/* RESAURANT NAVBAR */}
-        <ResturanNavbar />
+        <ResturanNavbar slug={slug} />
         {/* RESAURANT NAVBAR */} {/* TITLE */}
         <div className="mt-4 border-b pb-6">
-          <h1 className="font-bold text-6xl">Milesstone Grill</h1>
+          <h1 className="font-bold text-6xl">{name}</h1>
         </div>
         {/* TITLE */} {/* RATING */}
         <div className="flex items-end">
@@ -22,46 +53,14 @@ function ResturantDetails(): JSX.Element {
         </div>
         {/* RATING */} {/* DESCRIPTION */}
         <div className="mt-4">
-          <p className="text-lg font-light">
-            The classics you love prepared with a perfect twist, all served up
-            in an atmosphere that feels just right. That’s the Milestones
-            promise. So, whether you’re celebrating a milestone, making the most
-            of Happy Hour or enjoying brunch with friends, you can be sure that
-            every Milestones experience is a simple and perfectly memorable one.
-          </p>
+          <p className="text-lg font-light">{description}</p>
         </div>
         {/* DESCRIPTION */} {/* IMAGES */}
         <div>
           <h1 className="font-bold text-3xl mt-10 mb-7 border-b pb-5">
-            5 photos
+            {images.length} photo{images.length > 1 ? "s" : ""}
           </h1>
-          <div className="flex flex-wrap">
-            <img
-              className="w-56 h-44 mr-1 mb-1"
-              src="https://resizer.otstatic.com/v2/photos/xlarge/3/41701449.jpg"
-              alt=""
-            />
-            <img
-              className="w-56 h-44 mr-1 mb-1"
-              src="https://resizer.otstatic.com/v2/photos/xlarge/2/41701450.jpg"
-              alt=""
-            />
-            <img
-              className="w-56 h-44 mr-1 mb-1"
-              src="https://resizer.otstatic.com/v2/photos/xlarge/2/41701452.jpg"
-              alt=""
-            />
-            <img
-              className="w-56 h-44 mr-1 mb-1"
-              src="https://resizer.otstatic.com/v2/photos/xlarge/2/41701453.jpg"
-              alt=""
-            />
-            <img
-              className="w-56 h-44 mr-1 mb-1"
-              src="https://resizer.otstatic.com/v2/photos/xlarge/2/41701454.jpg"
-              alt=""
-            />
-          </div>
+          <div className="flex flex-wrap">{allImages}</div>
         </div>
         {/* IMAGES */} {/* REVIEWS */}
         <div>
