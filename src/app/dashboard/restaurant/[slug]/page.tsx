@@ -1,6 +1,7 @@
 import ResturanNavbar from "@/components/ResturanNavbar";
 import { RestaurantSlug } from "@/types";
 import { PrismaClient } from "@prisma/client";
+import type { Metadata } from "next";
 
 const prisma = new PrismaClient();
 
@@ -24,6 +25,15 @@ const getRestaurant = async (slug: string): Promise<RestaurantSlug> => {
 type props = {
   params: { slug: string };
 };
+
+export async function generateMetadata({ params }: props): Promise<Metadata> {
+  const { name, description } = await getRestaurant(params.slug);
+
+  return {
+    title: name,
+    description,
+  };
+}
 
 async function ResturantDetails({ params }: props) {
   const { name, slug, description, images } = await getRestaurant(params.slug);
