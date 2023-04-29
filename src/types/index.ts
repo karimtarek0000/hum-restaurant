@@ -1,4 +1,4 @@
-import { Cuisine, Location, PRICE } from "@prisma/client";
+import { Cuisine, Location, PRICE, Review } from "@prisma/client";
 
 export type RestaurantCard = {
   id: number;
@@ -8,6 +8,7 @@ export type RestaurantCard = {
   price: PRICE;
   location: Location;
   cuisine: Cuisine;
+  reviews: Review[];
 };
 
 export type RestaurantSlug = {
@@ -16,6 +17,7 @@ export type RestaurantSlug = {
   images: Array<string>;
   description: string;
   slug: string;
+  reviews: Review[];
 };
 
 export type Item = {

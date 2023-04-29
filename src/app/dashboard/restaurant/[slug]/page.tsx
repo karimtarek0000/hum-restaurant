@@ -16,6 +16,7 @@ const getRestaurant = async (slug: string): Promise<RestaurantSlug> => {
       images: true,
       description: true,
       slug: true,
+      reviews: true,
     },
   });
 

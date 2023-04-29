@@ -20,6 +20,7 @@ const getAllRestaurant = async (): Promise<RestaurantCard[]> => {
       price: true,
       location: true,
       cuisine: true,
+      reviews: true,
     },
   });
   return data;

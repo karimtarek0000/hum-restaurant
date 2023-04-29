@@ -11,13 +11,15 @@ export const metadata: Metadata = {
   title: "Search",
 };
 
+type SearchParams = { city: string; cuisine?: string; price?: PRICE };
 type Props = {
-  searchParams: { city: string; cuisine?: string; price?: PRICE };
+  searchParams: SearchParams;
 };
 
 const fetchAllRestaurants = async (
-  city: string | undefined
+  searchParams: SearchParams
 ): Promise<RestaurantCard[]> => {
+  const where: any = {};
   const select = {
     id: true,
     name: true,
@@ -26,24 +28,30 @@ const fetchAllRestaurants = async (
     price: true,
     location: true,
     cuisine: true,
+    reviews: true,
   };
-  let data = null;
-  if (!city) {
-    data = prisma.restaurant.findMany({
-      select,
-    });
-  } else {
-    data = prisma.restaurant.findMany({
-      where: {
-        location: {
-          name: {
-            equals: city,
-          },
-        },
+
+  if (searchParams.city) {
+    where.location = {
+      name: {
+        equals: searchParams.city.toLowerCase(),
       },
-      select,
-    });
+    };
   }
+  if (searchParams.cuisine) {
+    where.cuisine = {
+      name: {
+        equals: searchParams.cuisine.toLowerCase(),
+      },
+    };
+  }
+  if (searchParams.price) {
+    where.price = {
+      equals: searchParams.price,
+    };
+  }
+
+  const data = prisma.restaurant.findMany({ where, select });
   return data;
 };
 
@@ -68,8 +76,7 @@ const fetchAllCuisine = async (): Promise<Cuisine[]> => {
 };
 
 async function Search({ searchParams }: Props) {
-  const city = searchParams.city?.toLowerCase();
-  const restaurants = await fetchAllRestaurants(city);
+  const restaurants = await fetchAllRestaurants(searchParams);
   const locations = await fetchAllLocations();
   const cuisines = await fetchAllCuisine();
 
