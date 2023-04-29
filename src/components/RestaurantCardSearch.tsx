@@ -1,5 +1,6 @@
 import { RestaurantCard } from "@/types";
 import { calcRatingsAverage } from "@/utils/calcRatingsAverage";
+import Link from "next/link";
 import Price from "./Price";
 
 type Props = {
@@ -7,7 +8,8 @@ type Props = {
 };
 
 function RestaurantCardSearch({ restaurant }: Props): JSX.Element {
-  const { name, main_image, price, location, cuisine, reviews } = restaurant;
+  const { name, slug, main_image, price, location, cuisine, reviews } =
+    restaurant;
 
   const renderRatingTitle = (): string => {
     const rating: number = calcRatingsAverage(reviews);
@@ -15,7 +17,7 @@ function RestaurantCardSearch({ restaurant }: Props): JSX.Element {
     if (rating > 4) return "Awesome";
     if (rating <= 4 && rating > 3) return "Good";
     if (rating <= 3 && rating > 0) return "Average";
-    return ""
+    return "";
   };
 
   return (
@@ -35,7 +37,9 @@ function RestaurantCardSearch({ restaurant }: Props): JSX.Element {
           </div>
         </div>
         <div className="text-red-600">
-          <a href="">View more information</a>
+          <Link href={`/dashboard/restaurant/${slug}`}>
+            View more information
+          </Link>
         </div>
       </div>
     </div>
