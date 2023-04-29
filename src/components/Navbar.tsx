@@ -3,8 +3,11 @@ import Link from "next/link";
 function Navbar(): JSX.Element {
   return (
     <nav className="bg-white p-2 flex justify-between">
-      <Link href="/dashboard" className="font-bold text-gray-700 text-2xl">
-        OpenTable
+      <Link
+        href="/dashboard"
+        className="font-bold uppercase text-gray-700 text-2xl"
+      >
+        hum
       </Link>
       <div>
         <div className="flex">

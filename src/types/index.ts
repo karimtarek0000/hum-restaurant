@@ -25,3 +25,13 @@ export type Item = {
   price: string;
   restaurant_id: number;
 };
+
+export type Location = {
+  id: number;
+  name: string;
+};
+
+export type Cuisine = {
+  id: number;
+  name: string;
+};

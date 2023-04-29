@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { RestaurantCard } from "../../types";
+import { RestaurantCard } from "@/types";
 import Price from "./Price";
 
 type props = {
