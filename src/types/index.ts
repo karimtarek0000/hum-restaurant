@@ -17,3 +17,11 @@ export type RestaurantSlug = {
   description: string;
   slug: string;
 };
+
+export type Item = {
+  id: number;
+  name: string;
+  description: string;
+  price: string;
+  restaurant_id: number;
+};
