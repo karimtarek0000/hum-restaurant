@@ -5,24 +5,32 @@ import Image from "next/image";
 import { Review } from "@prisma/client";
 import { calcRatingsAverage } from "@/utils/calcRatingsAverage";
 
-function Stars({ reviews }: { reviews: Review[] }): JSX.Element {
+type Props = {
+  reviews?: Review[];
+  rate?: number;
+};
+
+function Stars({ reviews, rate }: Props): JSX.Element {
   const renderStars = () => {
-    const rating = calcRatingsAverage(reviews);
+    const rating: number = rate || calcRatingsAverage(reviews as []);
+
     const stars = [];
 
     for (let i = 0; i < 5; i++) {
-      const difference = parseFloat((rating - i).toFixed(1));
-      // Int
-      if (difference >= 1) stars.push(fullStar);
-      // Float
-      else if (difference < 1 && difference > 0) {
-        if (difference <= 0.2) stars.push(emptyStar);
-        else if (difference > 0.2 && difference <= 0.6) stars.push(halfStar);
-      } else stars.push(emptyStar);
+      const diff = parseFloat((rating - i).toFixed(1));
+      if (diff >= 1) {
+        stars.push(fullStar);
+      } else if (diff < 1 && diff > 0) {
+        if (diff <= 0.2) stars.push(emptyStar);
+        if (diff >= 0.2 && diff <= 0.6) stars.push(halfStar);
+        else stars.push(fullStar);
+      } else {
+        stars.push(emptyStar);
+      }
     }
 
     return stars.map((star) => (
-      <Image src={star} alt="star" className="w-4 h-4" />
+      <Image key={star.src} src={star} alt="star" className="w-4 h-4" />
     ));
   };
 

@@ -2,6 +2,7 @@ import { RestaurantCard } from "@/types";
 import { calcRatingsAverage } from "@/utils/calcRatingsAverage";
 import Link from "next/link";
 import Price from "./Price";
+import Stars from "./Stars";
 
 type Props = {
   restaurant: RestaurantCard;
@@ -26,7 +27,9 @@ function RestaurantCardSearch({ restaurant }: Props): JSX.Element {
       <div className="pl-5">
         <h2 className="text-3xl">{name}</h2>
         <div className="flex items-start">
-          <div className="flex mb-2">*****</div>
+          <div className="flex mb-2">
+            <Stars reviews={reviews} />
+          </div>
           <p className="ml-2 text-sm">{renderRatingTitle()}</p>
         </div>
         <div className="mb-9">

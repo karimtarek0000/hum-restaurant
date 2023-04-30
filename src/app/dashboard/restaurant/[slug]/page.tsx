@@ -1,5 +1,6 @@
 import ResturanNavbar from "@/components/ResturanNavbar";
 import Reviews from "@/components/Reviews";
+import Stars from "@/components/Stars";
 import { RestaurantSlug } from "@/types";
 import { calcRatingsAverage } from "@/utils/calcRatingsAverage";
 import { PrismaClient } from "@prisma/client";
@@ -60,7 +61,7 @@ async function ResturantDetails({ params }: props) {
         {/* TITLE */} {/* RATING */}
         <div className="flex items-end">
           <div className="ratings mt-2 flex items-center">
-            <p>*****</p>
+            <Stars reviews={reviews} />
             <p className="text-reg ml-3">
               {calcRatingsAverage(reviews).toFixed(1)}
             </p>
