@@ -23,9 +23,9 @@ const getRestaurant = async (slug: string): Promise<RestaurantSlug> => {
     },
   });
 
-  // if (!data) {
-  //   throw new Error({ message: "This slug not found" });
-  // }
+  if (!data) {
+    throw new Error("This slug not found");
+  }
 
   return data as RestaurantSlug;
 };
@@ -36,7 +36,11 @@ type props = {
 
 // For dynamic metadata
 export async function generateMetadata({ params }: props): Promise<Metadata> {
-  const data = await getRestaurant(params.slug);
+  let data = null;
+  try {
+    data = await getRestaurant(params.slug);
+  } catch {}
+
   return {
     title: data?.name,
     description: data?.description,
