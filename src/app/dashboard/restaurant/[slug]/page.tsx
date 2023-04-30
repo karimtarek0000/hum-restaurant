@@ -23,6 +23,10 @@ const getRestaurant = async (slug: string): Promise<RestaurantSlug> => {
     },
   });
 
+  // if (!data) {
+  //   throw new Error({ message: "This slug not found" });
+  // }
+
   return data as RestaurantSlug;
 };
 
