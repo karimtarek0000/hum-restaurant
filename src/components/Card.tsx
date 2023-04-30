@@ -1,6 +1,7 @@
 import { RestaurantCard } from "@/types";
 import Link from "next/link";
 import Price from "./Price";
+import Stars from "./Stars";
 
 type props = {
   restaurant: RestaurantCard;
@@ -19,7 +20,9 @@ function Card({ restaurant }: props): JSX.Element {
       <div className="p-1">
         <h3 className="font-bold text-2xl mb-2">{name}</h3>
         <div className="flex items-start">
-          <div className="flex mb-2">*****</div>
+          <div className="flex mb-2">
+            <Stars />
+          </div>
           <p className="ml-2">
             {reviews.length} review{reviews.length > 1 ? "s" : ""}
           </p>
