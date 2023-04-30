@@ -32,11 +32,10 @@ type props = {
 
 // For dynamic metadata
 export async function generateMetadata({ params }: props): Promise<Metadata> {
-  const { name, description } = await getRestaurant(params.slug);
-
+  const data = await getRestaurant(params.slug);
   return {
-    title: name,
-    description,
+    title: data?.name,
+    description: data?.description,
   };
 }
 
