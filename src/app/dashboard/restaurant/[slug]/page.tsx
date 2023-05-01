@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import ResturanNavbar from "@/components/ResturanNavbar";
 import Reviews from "@/components/Reviews";
 import Stars from "@/components/Stars";
@@ -24,7 +25,8 @@ const getRestaurant = async (slug: string): Promise<RestaurantSlug> => {
   });
 
   if (!data) {
-    throw new Error("This slug not found");
+    // throw new Error("This slug not found");
+    notFound();
   }
 
   return data as RestaurantSlug;
