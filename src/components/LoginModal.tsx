@@ -1,54 +1,89 @@
 "use client";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Modal from "@mui/material/Modal";
-import { useState } from "react";
+import { LoginInProps } from "./AuthModal";
 
-const style = {
-  position: "absolute" as "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
-
-export default function LoginModal({ isSignIn }: { isSignIn: boolean }) {
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
-  const styleButton = {
-    signUp: "border p-1 px-4 rounded",
-    signIn: "bg-blue-400 text-white border p-1 px-4 rounded mr-3",
-  };
-
+function LoginModal({ inputs, setFormData }: LoginInProps): JSX.Element {
   return (
-    <div>
-      <button
-        onClick={handleOpen}
-        className={`${isSignIn ? styleButton.signIn : styleButton.signUp}`}
-      >
-        {isSignIn ? "Sign in" : "sign up"}
-      </button>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Text in a modal
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-          </Typography>
-        </Box>
-      </Modal>
+    <div className=" flex flex-col justify-center gap-2 mt-3">
+      <div className="flex flex-col justify-center gap-1">
+        <label htmlFor="firstName">First name: </label>
+        <input
+          className="border outline-none rounded px-3 py-2 border-gray-400"
+          type="text"
+          id="firstName"
+          name="firstName"
+          autoComplete="off"
+          autoFocus
+          value={inputs.firstName}
+          onChange={setFormData}
+          placeholder="Enter your first name"
+        />
+      </div>
+      <div className="flex flex-col justify-center gap-1">
+        <label htmlFor="lastName">Last name: </label>
+        <input
+          className="border outline-none rounded px-3 py-2 border-gray-400"
+          type="text"
+          id="lastName"
+          name="lastName"
+          autoComplete="off"
+          value={inputs.lastName}
+          onChange={setFormData}
+          placeholder="Enter your last name"
+        />
+      </div>
+      <div className="flex flex-col justify-center gap-1">
+        <label htmlFor="email">Email: </label>
+        <input
+          className="border outline-none rounded px-3 py-2 border-gray-400"
+          type="email"
+          id="email"
+          name="email"
+          autoComplete="off"
+          value={inputs.email}
+          onChange={setFormData}
+          placeholder="Enter your email"
+        />
+      </div>
+      <div className="flex flex-col justify-center gap-1">
+        <label htmlFor="phone">Phone: </label>
+        <input
+          className="border outline-none rounded px-3 py-2 border-gray-400"
+          type="text"
+          id="phone"
+          name="phone"
+          autoComplete="off"
+          value={inputs.phone}
+          onChange={setFormData}
+          placeholder="Enter your phone"
+        />
+      </div>
+      <div className="flex flex-col justify-center gap-1">
+        <label htmlFor="city">City: </label>
+        <input
+          className="border outline-none rounded px-3 py-2 border-gray-400"
+          type="text"
+          id="city"
+          name="city"
+          autoComplete="off"
+          value={inputs.city}
+          onChange={setFormData}
+          placeholder="Enter your city"
+        />
+      </div>
+      <div className="flex flex-col justify-center gap-1">
+        <label htmlFor="password">Password: </label>
+        <input
+          className="border outline-none rounded px-3 py-2 border-gray-400"
+          type="password"
+          id="password"
+          name="password"
+          value={inputs.password}
+          onChange={setFormData}
+          placeholder="Enter your password"
+        />
+      </div>
     </div>
   );
 }
+
+export default LoginModal;

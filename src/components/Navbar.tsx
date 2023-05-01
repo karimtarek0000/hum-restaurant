@@ -1,5 +1,5 @@
 import Link from "next/link";
-import LoginModal from "./LoginModal";
+import AuthModal from "./AuthModal";
 
 function Navbar(): JSX.Element {
   return (
@@ -12,8 +12,8 @@ function Navbar(): JSX.Element {
       </Link>
       <div>
         <div className="flex">
-          <LoginModal isSignIn={true} />
-          <LoginModal isSignIn={false} />
+          <AuthModal isSignIn={true} />
+          <AuthModal isSignIn={false} />
         </div>
       </div>
     </nav>
