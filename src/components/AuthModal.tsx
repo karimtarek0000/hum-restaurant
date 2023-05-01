@@ -2,7 +2,7 @@
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import { ChangeEvent, useState } from "react";
-import LoginModal from "./LoginModal";
+import AuthInputs from "./AuthInputs";
 
 const style = {
   position: "absolute" as "absolute",
@@ -24,13 +24,14 @@ type Inputs = {
   password: string;
 };
 
-export type LoginInProps = {
+export type AuthProps = {
   inputs: Inputs;
+  isSignIn: boolean;
   setFormData(e: ChangeEvent<HTMLInputElement>): void;
 };
 
 export default function AuthModal({ isSignIn }: { isSignIn: boolean }) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState<boolean>(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [inputs, setInputs] = useState<Inputs>({
@@ -82,7 +83,11 @@ export default function AuthModal({ isSignIn }: { isSignIn: boolean }) {
             </div>
             {/* CONTENT */}
             <div className="mt-2">
-              <LoginModal inputs={inputs} setFormData={setFormData} />
+              <AuthInputs
+                inputs={inputs}
+                isSignIn={isSignIn}
+                setFormData={setFormData}
+              />
 
               <button className="uppercase mt-5 bg-red-500 rounded px-3 py-2 w-[100%] text-white">
                 {renderTitle("login", "signup")}
